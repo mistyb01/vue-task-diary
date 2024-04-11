@@ -1,5 +1,12 @@
 <script setup>
+import { ref } from "vue";
 import TodoItem from "./components/TodoItem.vue";
+
+const tasks = ref([
+  { id: 1, title: "Laundry", isComplete: false },
+  { id: 2, title: "Draw for 30 minutes", isComplete: false },
+  { id: 3, title: "Code a todo app in Vue", isComplete: false },
+]);
 </script>
 
 <template>
@@ -8,7 +15,13 @@ import TodoItem from "./components/TodoItem.vue";
   </header>
 
   <main>
-    <TodoItem title="Laundry" v-bind:isChecked="true" />
+    <!-- : is short for v-bind: -->
+    <TodoItem
+      v-for="task in tasks"
+      :key="task.id"
+      :title="task.title"
+      :isComplete="true"
+    />
   </main>
 </template>
 
