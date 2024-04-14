@@ -13,7 +13,7 @@ const tasks = ref([
 
 <template>
   <div class="container mx-auto p-4 max-w-screen-md">
-    <header class="mb-8">
+    <header class="my-8">
       <h1 class="text-2xl">Simply Done!</h1>
     </header>
 
