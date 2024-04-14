@@ -3,8 +3,8 @@ defineProps(["title", "isChecked"]);
 </script>
 
 <template>
-  <div>
+  <div class="flex gap-2">
     <input type="checkbox" name="" id="" v-bind:isComplete="isComplete" />
-    <span class="text-xl">{{ title }}</span>
+    <span>{{ title }}</span>
   </div>
 </template>

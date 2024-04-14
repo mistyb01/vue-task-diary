@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import TodoItem from "./components/TodoItem.vue";
+import TodoContainer from "./components/TodoContainer.vue";
 
 const tasks = ref([
   { id: 1, title: "Laundry", isComplete: false },
@@ -10,19 +11,22 @@ const tasks = ref([
 </script>
 
 <template>
-  <header>
-    <h1>DO IT!!!!</h1>
-  </header>
+  <div class="container mx-auto p-4 max-w-screen-md">
+    <header class="mb-4">
+      <h1 class="text-2xl">Simply Done!</h1>
+    </header>
 
-  <main>
-    <!-- : is short for v-bind: -->
-    <TodoItem
-      v-for="task in tasks"
-      :key="task.id"
-      :title="task.title"
-      :isComplete="true"
-    />
-  </main>
+    <main>
+      <TodoContainer>
+        <TodoItem
+          v-for="task in tasks"
+          :key="task.id"
+          :title="task.title"
+          :isComplete="true"
+        />
+      </TodoContainer>
+    </main>
+  </div>
 </template>
 
 <style scoped>
