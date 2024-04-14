@@ -18,6 +18,14 @@ function addTodo() {
   newTodoTitle.value = "";
 }
 
+function markDone(todoId) {
+  tasks.value[todoId].done = true;
+  console.log("done", todoId);
+}
+
+const incompleteTasks = computed(() => tasks.value.filter((t) => !t.done));
+const completedTasks = computed(() => tasks.value.filter((t) => t.done));
+
 const hasCompleted = computed(
   () => tasks.value.filter((t) => t.done).length > 0
 );
@@ -36,9 +44,12 @@ const hasIncomplete = computed(
       <TodoInput v-model="newTodoTitle" @submitTodo="addTodo" />
       <TodoContainer>
         <TodoItem
-          v-for="task in tasks.filter((t) => !t.done)"
+          v-for="task in incompleteTasks"
+          v-model="task.done"
           :key="task.id"
+          :id="task.id"
           :title="task.title"
+          @check="(id) => markDone(id)"
         />
         <span v-if="!hasIncomplete">Let's do something! Add a task.</span>
       </TodoContainer>
@@ -46,7 +57,7 @@ const hasIncomplete = computed(
         <h2 class="text-xl">Completed.</h2>
         <TodoContainer>
           <DoneItem
-            v-for="task in tasks.filter((t) => t.done)"
+            v-for="task in completedTasks"
             :key="task.id"
             :title="task.title"
           />
