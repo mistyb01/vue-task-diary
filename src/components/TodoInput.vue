@@ -1,15 +1,17 @@
 <script setup>
-import { ref } from "vue";
+const model = defineModel();
+const emit = defineEmits(["submitTodo"]);
 
-const newTodoTitle = ref("");
-const emit = defineEmits(["response"]);
+function submit() {
+  emit("submitTodo");
+}
 </script>
 
 <template>
-  <div class="flex min-w-min rounded border-solid border-2 border-gray-400">
-    <input v-model="newTodoTitle" class="p-2 flex-grow" type="text" />
-    <button class="bg-gray-100 w-16" @click="$emit('response', newTodoTitle)">
-      +
-    </button>
-  </div>
+  <form @submit.prevent="submit">
+    <div class="flex min-w-min rounded border-solid border-2 border-gray-400">
+      <input v-model="model" class="p-2 flex-grow" type="text" />
+      <button class="bg-gray-100 w-16" type="submit">+</button>
+    </div>
+  </form>
 </template>

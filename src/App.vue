@@ -15,9 +15,12 @@ const tasks = ref([
   { id: id++, title: "Wash face", done: true },
 ]);
 
-function addTodo(newTodoTitle) {
-  const todoObj = { id: id++, title: newTodoTitle, done: false };
+const newTodoTitle = ref("");
+
+function addTodo() {
+  const todoObj = { id: id++, title: newTodoTitle.value, done: false };
   tasks.value.push(todoObj);
+  newTodoTitle.value = "";
 }
 </script>
 
@@ -28,7 +31,7 @@ function addTodo(newTodoTitle) {
     </header>
 
     <main>
-      <TodoInput @response="(formInput) => addTodo(formInput)" />
+      <TodoInput v-model="newTodoTitle" @submitTodo="addTodo" />
       <TodoContainer>
         <TodoItem
           v-for="task in tasks.filter((t) => !t.done)"
