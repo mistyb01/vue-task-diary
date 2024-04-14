@@ -1,16 +1,11 @@
 <script setup>
 const model = defineModel();
-defineProps(["title", "id"]);
-const emit = defineEmits(["check"]);
-
-function handleCheck() {
-  emit("check", id);
-}
+defineProps(["title"]);
 </script>
 
 <template>
   <div class="flex gap-2 p-4">
-    <input v-model="model" type="checkbox" name="" id="" @click="handleCheck" />
+    <input v-model="model" type="checkbox" />
     <span>{{ title }}</span>
   </div>
 </template>

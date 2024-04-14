@@ -47,9 +47,7 @@ const hasIncomplete = computed(
           v-for="task in incompleteTasks"
           v-model="task.done"
           :key="task.id"
-          :id="task.id"
           :title="task.title"
-          @check="(id) => markDone(id)"
         />
         <span v-if="!hasIncomplete">Let's do something! Add a task.</span>
       </TodoContainer>
