@@ -18,8 +18,8 @@ const tasks = ref([
     </header>
 
     <main>
+      <TodoInput />
       <TodoContainer>
-        <TodoInput />
         <TodoItem
           v-for="task in tasks"
           :key="task.id"
