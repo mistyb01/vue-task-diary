@@ -6,12 +6,19 @@ import TodoContainer from "./components/TodoContainer.vue";
 import DoneContainer from "./components/DoneContainer.vue";
 import TodoInput from "./components/TodoInput.vue";
 
+let id = 0;
+
 const tasks = ref([
-  { id: 1, title: "Laundry", isComplete: true },
-  { id: 2, title: "Draw for 30 minutes", isComplete: false },
-  { id: 3, title: "Code a todo app in Vue", isComplete: false },
-  { id: 3, title: "Wash face", isComplete: true },
+  { id: id++, title: "Laundry", done: true },
+  { id: id++, title: "Draw for 30 minutes", done: false },
+  { id: id++, title: "Code a todo app in Vue", done: false },
+  { id: id++, title: "Wash face", done: true },
 ]);
+
+function addTodo(newTodoTitle) {
+  const todoObj = { id: id++, title: newTodoTitle, done: false };
+  tasks.value.push(todoObj);
+}
 </script>
 
 <template>
@@ -21,10 +28,10 @@ const tasks = ref([
     </header>
 
     <main>
-      <TodoInput />
+      <TodoInput @response="(formInput) => addTodo(formInput)" />
       <TodoContainer>
         <TodoItem
-          v-for="task in tasks.filter((t) => !t.isComplete)"
+          v-for="task in tasks.filter((t) => !t.done)"
           :key="task.id"
           :title="task.title"
         />
@@ -33,7 +40,7 @@ const tasks = ref([
         <h2 class="text-xl">Completed.</h2>
         <TodoContainer>
           <DoneItem
-            v-for="task in tasks.filter((t) => t.isComplete)"
+            v-for="task in tasks.filter((t) => t.done)"
             :key="task.id"
             :title="task.title"
           />
