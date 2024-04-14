@@ -4,7 +4,7 @@ defineProps(["title"]);
 
 <template>
   <div class="flex gap-2 p-4">
-    <input type="checkbox" name="" id="" />
+    <span>&#x2713;</span>
     <span>{{ title }}</span>
   </div>
 </template>
