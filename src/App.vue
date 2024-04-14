@@ -8,7 +8,7 @@ import TodoInput from "./components/TodoInput.vue";
 
 let id = 0;
 
-const tasks = ref([{ id: id++, title: "sleep", done: true }]);
+const tasks = ref([{ id: id++, title: "sleep", done: false }]);
 
 const newTodoTitle = ref("");
 
@@ -18,20 +18,8 @@ function addTodo() {
   newTodoTitle.value = "";
 }
 
-function markDone(todoId) {
-  tasks.value[todoId].done = true;
-  console.log("done", todoId);
-}
-
 const incompleteTasks = computed(() => tasks.value.filter((t) => !t.done));
 const completedTasks = computed(() => tasks.value.filter((t) => t.done));
-
-const hasCompleted = computed(
-  () => tasks.value.filter((t) => t.done).length > 0
-);
-const hasIncomplete = computed(
-  () => tasks.value.filter((t) => !t.done).length > 0
-);
 </script>
 
 <template>
@@ -49,9 +37,11 @@ const hasIncomplete = computed(
           :key="task.id"
           :title="task.title"
         />
-        <span v-if="!hasIncomplete">Let's do something! Add a task.</span>
+        <span v-if="!incompleteTasks.length"
+          >Let's do something! Add a task.</span
+        >
       </TodoContainer>
-      <DoneContainer v-if="hasCompleted">
+      <DoneContainer v-if="completedTasks.length">
         <h2 class="text-xl">Completed.</h2>
         <TodoContainer>
           <DoneItem
