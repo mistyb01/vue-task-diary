@@ -18,6 +18,10 @@ function addTodo() {
   newTodoTitle.value = "";
 }
 
+function deleteTodo(todoId) {
+  tasks.value = tasks.value.filter((t) => t.id !== todoId);
+}
+
 const incompleteTasks = computed(() => tasks.value.filter((t) => !t.done));
 const completedTasks = computed(() => tasks.value.filter((t) => t.done));
 </script>
@@ -35,7 +39,9 @@ const completedTasks = computed(() => tasks.value.filter((t) => t.done));
           v-for="task in incompleteTasks"
           v-model="task.done"
           :key="task.id"
+          :id="task.id"
           :title="task.title"
+          @deleteTodo="(todoId) => deleteTodo(todoId)"
         />
         <span v-if="!incompleteTasks.length"
           >Let's do something! Add a task.</span

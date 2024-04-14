@@ -1,8 +1,8 @@
 <script setup>
 import { TrashIcon, PencilIcon } from "@heroicons/vue/24/outline";
-
+defineProps(["title", "id"]);
 const model = defineModel();
-defineProps(["title"]);
+const emit = defineEmits(["deleteTodo"]);
 </script>
 
 <template>
@@ -16,8 +16,12 @@ defineProps(["title"]);
     <div
       class="opacity-0 group-hover:opacity-100 transition-opacity duration-150 flex gap-4"
     >
-      <PencilIcon class="h-6 w-6" />
-      <TrashIcon class="h-6 w-6" />
+      <button>
+        <PencilIcon class="h-6 w-6" />
+      </button>
+      <button @click="$emit('deleteTodo', id)">
+        <TrashIcon class="h-6 w-6" />
+      </button>
     </div>
   </div>
 </template>
