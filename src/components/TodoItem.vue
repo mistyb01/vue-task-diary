@@ -5,6 +5,6 @@ defineProps(["title", "isChecked"]);
 <template>
   <div>
     <input type="checkbox" name="" id="" v-bind:isComplete="isComplete" />
-    <span>{{ title }}</span>
+    <span class="text-xl">{{ title }}</span>
   </div>
 </template>
