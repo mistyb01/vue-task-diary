@@ -18,11 +18,13 @@ function toggleEditMode(title) {
   isEditing.value = !isEditing.value;
   editedTitle.value = title;
 }
+
+const iconStyles = "h-5 w-5 hover:text-pink-500";
 </script>
 
 <template>
   <div
-    class="flex justify-between p-4 rounded hover:bg-gray-100 transition-colors duration-150"
+    class="flex justify-between p-4 rounded hover:bg-pink-50 transition-colors duration-150"
   >
     <div class="flex gap-4">
       <input v-model="model" type="checkbox" />
@@ -46,14 +48,14 @@ function toggleEditMode(title) {
           }
         "
       >
-        <CheckIcon class="h-6 w-6" />
+        <CheckIcon :class="iconStyles" />
       </button>
       <button @click="() => toggleEditMode(title)">
-        <PencilIcon v-if="!isEditing" class="h-6 w-6" />
-        <XMarkIcon v-else class="h-6 w-6" />
+        <PencilIcon v-if="!isEditing" :class="iconStyles" />
+        <XMarkIcon v-else :class="iconStyles" />
       </button>
       <button v-if="!isEditing" @click="$emit('deleteTodo', id)">
-        <TrashIcon class="h-6 w-6" />
+        <TrashIcon :class="iconStyles" />
       </button>
     </div>
   </div>
