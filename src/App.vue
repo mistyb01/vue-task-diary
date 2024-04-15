@@ -54,11 +54,9 @@ const headingText = motivationalHeadings[randomIndex];
 </script>
 
 <template>
-  <div
-    class="container mx-auto p-4 max-w-screen-md border-pink-200 border-solid border-l-2 border-r-2 min-h-screen"
-  >
+  <div class="container mx-auto p-4 max-w-screen-md min-h-screen">
     <header class="my-8">
-      <h1 class="text-2xl">{{ headingText }}</h1>
+      <h1 class="font-semibold text-2xl text-pink-500">{{ headingText }}</h1>
     </header>
 
     <main>

@@ -12,7 +12,7 @@ function submit() {
 <template>
   <form @submit.prevent="submit">
     <div
-      class="flex gap-1 min-w-min rounded border-solid border-2 border-gray-400"
+      class="flex gap-1 min-w-min rounded border-solid border-2 border-pink-500"
     >
       <input
         v-model="model"
@@ -21,10 +21,10 @@ function submit() {
         placeholder="what do you wanna do?"
       />
       <button
-        class="bg-pink-50 w-16 flex justify-center items-center"
+        class="group bg-pink-100 hover:bg-pink-500 w-16 flex justify-center items-center"
         type="submit"
       >
-        <PlusIcon class="w-5 h-5" />
+        <PlusIcon class="w-6 h-6 text-pink-500 group-hover:text-white" />
       </button>
     </div>
   </form>
