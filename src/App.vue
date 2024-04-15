@@ -26,6 +26,10 @@ function undoComplete(todoId) {
   tasks.value[todoId].done = false;
 }
 
+function editTodo(todoId, editedTitle) {
+  tasks.value[todoId].title = editedTitle;
+}
+
 const incompleteTasks = computed(() => tasks.value.filter((t) => !t.done));
 const completedTasks = computed(() => tasks.value.filter((t) => t.done));
 </script>
@@ -46,6 +50,7 @@ const completedTasks = computed(() => tasks.value.filter((t) => t.done));
           :id="task.id"
           :title="task.title"
           @deleteTodo="(todoId) => deleteTodo(todoId)"
+          @submitEdit="(todoId, editedTitle) => editTodo(todoId, editedTitle)"
         />
         <span v-if="!incompleteTasks.length"
           >Let's do something! Add a task.</span

@@ -7,18 +7,25 @@ import {
   XMarkIcon,
 } from "@heroicons/vue/24/outline";
 const model = defineModel();
-const emit = defineEmits(["deleteTodo"]);
+const emit = defineEmits(["deleteTodo", "submitEdit"]);
 
 // extra steps to make it possible to use title prop within the script
 // https://stackoverflow.com/questions/66382293/how-to-use-props-in-script-setup-in-vue3
 const props = defineProps(["title", "id"]);
-const { title } = toRefs(props);
+const { title, id } = toRefs(props);
 
 const isEditing = ref(false);
-const editingValue = ref(title.value);
+const editedTitle = ref(title.value);
 
 function toggleEdit() {
   isEditing.value = !isEditing.value;
+  editedTitle.value = title.value;
+}
+
+function handleEdit() {
+  console.log("emit!");
+  emit("submitEdit", id.value, editedTitle);
+  isEditing.value = false;
 }
 </script>
 
@@ -32,14 +39,14 @@ function toggleEdit() {
         <span v-if="!isEditing">{{ title }}</span>
         <input
           v-else
-          v-model="editingValue"
+          v-model="editedTitle"
           type="text"
           class="bg-transparent border-dotted border-2 border-gray-400"
         />
       </div>
     </div>
     <div class="flex gap-4">
-      <button v-if="isEditing" @click="submitEdit">
+      <button v-if="isEditing" @click="handleEdit">
         <CheckIcon class="h-6 w-6" />
       </button>
       <button @click="toggleEdit">
