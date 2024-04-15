@@ -1,10 +1,16 @@
 <script setup>
 import { ref, toRefs } from "vue";
-import { TrashIcon, PencilIcon } from "@heroicons/vue/24/outline";
+import {
+  TrashIcon,
+  PencilIcon,
+  CheckIcon,
+  XMarkIcon,
+} from "@heroicons/vue/24/outline";
 const model = defineModel();
 const emit = defineEmits(["deleteTodo"]);
 
 // extra steps to make it possible to use title prop within the script
+// https://stackoverflow.com/questions/66382293/how-to-use-props-in-script-setup-in-vue3
 const props = defineProps(["title", "id"]);
 const { title } = toRefs(props);
 
@@ -33,10 +39,14 @@ function toggleEdit() {
       </div>
     </div>
     <div class="flex gap-4">
-      <button @click="toggleEdit">
-        <PencilIcon class="h-6 w-6" />
+      <button v-if="isEditing" @click="submitEdit">
+        <CheckIcon class="h-6 w-6" />
       </button>
-      <button @click="$emit('deleteTodo', id)">
+      <button @click="toggleEdit">
+        <PencilIcon v-if="!isEditing" class="h-6 w-6" />
+        <XMarkIcon v-else class="h-6 w-6" />
+      </button>
+      <button v-if="!isEditing" @click="$emit('deleteTodo', id)">
         <TrashIcon class="h-6 w-6" />
       </button>
     </div>
