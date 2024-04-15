@@ -5,15 +5,14 @@ import DoneItem from "./components/DoneItem.vue";
 import TodoContainer from "./components/TodoContainer.vue";
 import DoneContainer from "./components/DoneContainer.vue";
 import TodoInput from "./components/TodoInput.vue";
+import { v4 as uuidv4 } from "uuid";
 
-let id = 0;
-
-const tasks = ref([{ id: id++, title: "sleep", done: false }]);
+const tasks = ref([{ id: uuidv4(), title: "sleep", done: false }]);
 
 const newTodoTitle = ref("");
 
 function addTodo() {
-  const todoObj = { id: id++, title: newTodoTitle.value, done: false };
+  const todoObj = { id: uuidv4(), title: newTodoTitle.value, done: false };
   tasks.value.push(todoObj);
   newTodoTitle.value = "";
 }
@@ -23,7 +22,8 @@ function deleteTodo(todoId) {
 }
 
 function undoComplete(todoId) {
-  tasks.value[todoId].done = false;
+  const index = tasks.value.findIndex((t) => t.id === todoId);
+  tasks.value[index].done = false;
 }
 
 function editTodo(todoId, editedTitle) {
