@@ -6,8 +6,11 @@ import TodoContainer from "./components/TodoContainer.vue";
 import DoneContainer from "./components/DoneContainer.vue";
 import TodoInput from "./components/TodoInput.vue";
 import { v4 as uuidv4 } from "uuid";
+import { useStorage } from "@vueuse/core";
 
-const tasks = ref([{ id: uuidv4(), title: "sleep", done: false }]);
+const tasks = useStorage("task-store", [
+  { id: uuidv4(), title: "example task", done: false },
+]);
 
 const newTodoTitle = ref("");
 
@@ -33,12 +36,27 @@ function editTodo(todoId, editedTitle) {
 
 const incompleteTasks = computed(() => tasks.value.filter((t) => !t.done));
 const completedTasks = computed(() => tasks.value.filter((t) => t.done));
+
+const motivationalHeadings = [
+  "Seize the day.",
+  "Start today.",
+  "Do something for future you!",
+  "Knock it out!",
+];
+
+function randomIntFromInterval(min, max) {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+const randomIndex = randomIntFromInterval(0, motivationalHeadings.length - 1);
+const headingText = motivationalHeadings[randomIndex];
 </script>
 
 <template>
-  <div class="container mx-auto p-4 max-w-screen-md">
+  <div class="container mx-auto p-4 max-w-screen-md min-h-screen">
     <header class="my-8">
-      <h1 class="text-2xl">Silly little tasks.</h1>
+      <h1 class="font-semibold text-2xl text-pink-500">{{ headingText }}</h1>
     </header>
 
     <main>
@@ -58,7 +76,7 @@ const completedTasks = computed(() => tasks.value.filter((t) => t.done));
         >
       </TodoContainer>
       <DoneContainer v-if="completedTasks.length">
-        <h2 class="text-xl">Completed.</h2>
+        <h2 class="text-xl">Completed!</h2>
         <TodoContainer>
           <DoneItem
             v-for="task in completedTasks"
