@@ -6,8 +6,11 @@ import TodoContainer from "./components/TodoContainer.vue";
 import DoneContainer from "./components/DoneContainer.vue";
 import TodoInput from "./components/TodoInput.vue";
 import { v4 as uuidv4 } from "uuid";
+import { useStorage } from "@vueuse/core";
 
-const tasks = ref([{ id: uuidv4(), title: "sleep", done: false }]);
+const tasks = useStorage("task-store", [
+  { id: uuidv4(), title: "example task", done: false },
+]);
 
 const newTodoTitle = ref("");
 
