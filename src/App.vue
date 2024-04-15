@@ -27,7 +27,8 @@ function undoComplete(todoId) {
 }
 
 function editTodo(todoId, editedTitle) {
-  tasks.value[todoId].title = editedTitle;
+  const index = tasks.value.findIndex((t) => t.id === todoId);
+  tasks.value[index].title = editedTitle;
 }
 
 const incompleteTasks = computed(() => tasks.value.filter((t) => !t.done));
