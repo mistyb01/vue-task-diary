@@ -36,12 +36,29 @@ function editTodo(todoId, editedTitle) {
 
 const incompleteTasks = computed(() => tasks.value.filter((t) => !t.done));
 const completedTasks = computed(() => tasks.value.filter((t) => t.done));
+
+const motivationalHeadings = [
+  "Seize the day.",
+  "Start today.",
+  "Do something for future you!",
+  "Knock it out!",
+];
+
+function randomIntFromInterval(min, max) {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+const randomIndex = randomIntFromInterval(0, motivationalHeadings.length - 1);
+const headingText = motivationalHeadings[randomIndex];
 </script>
 
 <template>
-  <div class="container mx-auto p-4 max-w-screen-md">
+  <div
+    class="container mx-auto p-4 max-w-screen-md border-pink-200 border-solid border-l-2 border-r-2 min-h-screen"
+  >
     <header class="my-8">
-      <h1 class="text-2xl">Silly little tasks.</h1>
+      <h1 class="text-2xl">{{ headingText }}</h1>
     </header>
 
     <main>
