@@ -61,7 +61,7 @@ const completedTasks = computed(() => tasks.value.filter((t) => t.done));
         >
       </TodoContainer>
       <DoneContainer v-if="completedTasks.length">
-        <h2 class="text-xl">Completed.</h2>
+        <h2 class="text-xl">Completed!</h2>
         <TodoContainer>
           <DoneItem
             v-for="task in completedTasks"
