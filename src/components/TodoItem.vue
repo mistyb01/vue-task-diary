@@ -9,23 +9,14 @@ import {
 const model = defineModel();
 const emit = defineEmits(["deleteTodo", "submitEdit"]);
 
-// extra steps to make it possible to use title prop within the script
-// https://stackoverflow.com/questions/66382293/how-to-use-props-in-script-setup-in-vue3
-const props = defineProps(["title", "id"]);
-const { title, id } = toRefs(props);
+defineProps(["title", "id"]);
 
 const isEditing = ref(false);
-const editedTitle = ref(title.value);
+const editedTitle = ref("");
 
-function toggleEdit() {
+function toggleEditMode(title) {
   isEditing.value = !isEditing.value;
-  editedTitle.value = title.value;
-}
-
-function handleEdit() {
-  console.log("emit!");
-  emit("submitEdit", id.value, editedTitle);
-  isEditing.value = false;
+  editedTitle.value = title;
 }
 </script>
 
@@ -46,10 +37,18 @@ function handleEdit() {
       </div>
     </div>
     <div class="flex gap-4">
-      <button v-if="isEditing" @click="handleEdit">
+      <button
+        v-if="isEditing"
+        @click="
+          () => {
+            $emit('submitEdit', id, editedTitle);
+            isEditing = false;
+          }
+        "
+      >
         <CheckIcon class="h-6 w-6" />
       </button>
-      <button @click="toggleEdit">
+      <button @click="() => toggleEditMode(title)">
         <PencilIcon v-if="!isEditing" class="h-6 w-6" />
         <XMarkIcon v-else class="h-6 w-6" />
       </button>
