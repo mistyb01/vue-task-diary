@@ -22,6 +22,10 @@ function deleteTodo(todoId) {
   tasks.value = tasks.value.filter((t) => t.id !== todoId);
 }
 
+function undoComplete(todoId) {
+  tasks.value[todoId].done = false;
+}
+
 const incompleteTasks = computed(() => tasks.value.filter((t) => !t.done));
 const completedTasks = computed(() => tasks.value.filter((t) => t.done));
 </script>
@@ -53,7 +57,9 @@ const completedTasks = computed(() => tasks.value.filter((t) => t.done));
           <DoneItem
             v-for="task in completedTasks"
             :key="task.id"
+            :id="task.id"
             :title="task.title"
+            @undoComplete="(todoId) => undoComplete(todoId)"
           />
         </TodoContainer>
       </DoneContainer>
