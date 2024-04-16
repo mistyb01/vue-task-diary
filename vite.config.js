@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
+  base: "https://mistyb01.github.io/vue-task-diary/",
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
