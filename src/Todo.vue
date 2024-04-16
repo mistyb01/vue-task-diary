@@ -107,8 +107,10 @@ const headingText = motivationalHeadings[randomIndex];
             @undoComplete="(todoId) => undoComplete(todoId)"
           />
         </TodoContainer>
-        <a href="#/history">view full history</a>
       </DoneContainer>
+      <div class="mt-8">
+        <a href="#/history" class="text-pink-400">view history</a>
+      </div>
     </main>
   </div>
 </template>
