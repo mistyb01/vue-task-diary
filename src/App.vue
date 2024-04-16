@@ -9,13 +9,25 @@ import { v4 as uuidv4 } from "uuid";
 import { useStorage } from "@vueuse/core";
 
 const tasks = useStorage("task-store", [
-  { id: uuidv4(), title: "example task", done: false },
+  {
+    id: uuidv4(),
+    title: "example task",
+    done: false,
+    creationDate: Date.now(),
+    completionDate: null,
+  },
 ]);
 
 const newTodoTitle = ref("");
 
 function addTodo() {
-  const todoObj = { id: uuidv4(), title: newTodoTitle.value, done: false };
+  const todoObj = {
+    id: uuidv4(),
+    title: newTodoTitle.value,
+    done: false,
+    creationDate: Date.now(),
+    completionDate: null,
+  };
   tasks.value.push(todoObj);
   newTodoTitle.value = "";
 }
