@@ -12,7 +12,7 @@ function submit() {
 <template>
   <form @submit.prevent="submit">
     <div
-      class="flex gap-1 min-w-min rounded border-solid border-2 border-pink-500"
+      class="flex gap-1 min-w-min rounded border-solid border-2 border-gray-500"
     >
       <input
         v-model="model"
