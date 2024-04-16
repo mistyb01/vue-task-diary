@@ -39,11 +39,19 @@ function deleteTodo(todoId) {
 function undoComplete(todoId) {
   const index = tasks.value.findIndex((t) => t.id === todoId);
   tasks.value[index].done = false;
+  tasks.value[index].completionDate = null;
 }
 
 function editTodo(todoId, editedTitle) {
   const index = tasks.value.findIndex((t) => t.id === todoId);
   tasks.value[index].title = editedTitle;
+}
+
+function checkTodo(todoId) {
+  // note that each tasks 'done' state is updated automatically by the input's model.
+  // this function just assigns a completion date.
+  const index = tasks.value.findIndex((t) => t.id === todoId);
+  tasks.value[index].completionDate = Date.now();
 }
 
 const incompleteTasks = computed(() => tasks.value.filter((t) => !t.done));
@@ -80,6 +88,7 @@ const headingText = motivationalHeadings[randomIndex];
           :key="task.id"
           :id="task.id"
           :title="task.title"
+          @checkTodo="(todoId) => checkTodo(todoId)"
           @deleteTodo="(todoId) => deleteTodo(todoId)"
           @submitEdit="(todoId, editedTitle) => editTodo(todoId, editedTitle)"
         />
