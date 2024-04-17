@@ -71,6 +71,7 @@ function randomIntFromInterval(min, max) {
 
 const randomIndex = randomIntFromInterval(0, motivationalHeadings.length - 1);
 const headingText = motivationalHeadings[randomIndex];
+
 </script>
 
 <template>
