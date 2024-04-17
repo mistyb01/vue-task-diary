@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { useStorage } from "@vueuse/core";
 
 const tasks = useStorage("task-store", []);
@@ -15,7 +15,15 @@ completedTasks.value.forEach((task) => {
     tasksByDateObj[dateStr] = [task];
   }
 })
-console.log(tasksByDateObj);
+
+const tasksByDateArray = Object.keys(tasksByDateObj).map((date) => {
+  return {
+    date,
+    tasks: tasksByDateObj[date]
+  }
+})
+
+console.log(tasksByDateArray)
 </script>
 
 <template>
@@ -27,8 +35,16 @@ console.log(tasksByDateObj);
     <main>
       <div>
         <ul>
-          <li v-for="task in completedTasks" :key="task.id">
-            {{ task.title }}
+          <li v-for="dateGroup in tasksByDateArray" :key="dateGroup.date">
+            <p class="font-bold">
+              {{ dateGroup.date }}
+              </p>
+              <ul>
+                <li v-for="task in dateGroup.tasks" :key="task.id" class="list-disc">
+                {{ task.title }}
+                </li>
+              </ul>
+            
           </li>
         </ul>
       </div>
