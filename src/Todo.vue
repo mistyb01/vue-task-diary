@@ -12,7 +12,6 @@ const tasks = useStorage("task-store", [
   {
     id: uuidv4(),
     title: "example task",
-    done: false,
     creationDate: Date.now(),
     completionDate: null,
   },
@@ -24,7 +23,6 @@ function addTodo() {
   const todoObj = {
     id: uuidv4(),
     title: newTodoTitle.value,
-    done: false,
     creationDate: Date.now(),
     completionDate: null,
   };
@@ -38,7 +36,6 @@ function deleteTodo(todoId) {
 
 function undoComplete(todoId) {
   const index = tasks.value.findIndex((t) => t.id === todoId);
-  tasks.value[index].done = false;
   tasks.value[index].completionDate = null;
 }
 
@@ -48,14 +45,12 @@ function editTodo(todoId, editedTitle) {
 }
 
 function checkTodo(todoId) {
-  // note that each tasks 'done' state is updated automatically by the input's model.
-  // this function just assigns a completion date.
   const index = tasks.value.findIndex((t) => t.id === todoId);
   tasks.value[index].completionDate = Date.now();
 }
 
-const incompleteTasks = computed(() => tasks.value.filter((t) => !t.done));
-const completedTasks = computed(() => tasks.value.filter((t) => t.done));
+const incompleteTasks = computed(() => tasks.value.filter((t) => !t.completionDate));
+const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate));
 
 const motivationalHeadings = [
   "Seize the day.",
@@ -85,7 +80,6 @@ const headingText = motivationalHeadings[randomIndex];
       <TodoContainer>
         <TodoItem
           v-for="task in incompleteTasks"
-          v-model="task.done"
           :key="task.id"
           :id="task.id"
           :title="task.title"
