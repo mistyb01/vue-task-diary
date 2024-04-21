@@ -8,12 +8,14 @@ import TodoInput from "./components/TodoInput.vue";
 import { v4 as uuidv4 } from "uuid";
 import { useStorage } from "@vueuse/core";
 
+const todaysDate = new Date().toLocaleDateString();
+
 const tasks = useStorage("task-store", [
   {
     id: uuidv4(),
     title: "example task",
-    creationDate: Date.now(),
-    completionDate: null,
+    creationDate: new Date(),
+    completionDate: todaysDate,
   },
 ]);
 
@@ -23,7 +25,7 @@ function addTodo() {
   const todoObj = {
     id: uuidv4(),
     title: newTodoTitle.value,
-    creationDate: Date.now(),
+    creationDate: todaysDate,
     completionDate: null,
   };
   tasks.value.push(todoObj);
@@ -46,7 +48,7 @@ function editTodo(todoId, editedTitle) {
 
 function checkTodo(todoId) {
   const index = tasks.value.findIndex((t) => t.id === todoId);
-  tasks.value[index].completionDate = Date.now();
+  tasks.value[index].completionDate = todaysDate;
 }
 
 const incompleteTasks = computed(() => tasks.value.filter((t) => !t.completionDate));

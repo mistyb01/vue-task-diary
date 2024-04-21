@@ -5,12 +5,11 @@ import DoneItem from "./components/DoneItem.vue";
 import { ArrowLongLeftIcon } from "@heroicons/vue/24/outline";
 
 const tasks = useStorage("task-store", []);
-const completedTasks = computed(() => tasks.value.filter((t) => t.done));
+const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate));
 
 let tasksByDateObj = {}
 completedTasks.value.forEach((task) => {
-  let dateObj = new Date(task.completionDate);
-  let dateStr = dateObj.toLocaleDateString();
+  let dateStr = task.completionDate;
   if (tasksByDateObj[dateStr]) {
     tasksByDateObj[dateStr].push(task);
   } else {
