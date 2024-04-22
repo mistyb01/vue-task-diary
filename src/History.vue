@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import { useStorage } from "@vueuse/core";
 import DoneItem from "./components/DoneItem.vue";
 import { ArrowLongLeftIcon } from "@heroicons/vue/24/outline";
@@ -8,23 +8,32 @@ const tasks = useStorage("task-store", []);
 const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate));
 
 let tasksByDateObj = {}
-completedTasks.value.forEach((task) => {
-  let dateStr = task.completionDate;
-  if (tasksByDateObj[dateStr]) {
-    tasksByDateObj[dateStr].push(task);
-  } else {
-    tasksByDateObj[dateStr] = [task];
-  }
-})
+watch(completedTasks, (newCompletedTasks) => {
+  newCompletedTasks.forEach((task) => {
+    let dateStr = task.completionDate;
+    if (tasksByDateObj[dateStr]) {
+      tasksByDateObj[dateStr].push(task);
+    } else {
+      tasksByDateObj[dateStr] = [task];
+    }
+  })
+},
+{ immediate: true }
+)
 
-const tasksByDateArray = Object.keys(tasksByDateObj).map((date) => {
+const tasksByDateArray = computed(() => Object.keys(tasksByDateObj).map((date) => {
   return {
     date,
     tasks: tasksByDateObj[date]
   }
-})
+}))
 
-console.log(tasksByDateArray)
+function undoComplete(todoId) {
+  console.log('id', todoId)
+  console.log(tasks.value)
+  const index = tasks.value.findIndex((t) => t.id === todoId);
+  tasks.value[index].completionDate = null;
+}
 </script>
 
 <template>
@@ -44,7 +53,9 @@ console.log(tasksByDateArray)
             {{ dateGroup.date }}
           </h3>        
           <li>
-            <DoneItem v-for="task in dateGroup.tasks" :key="task.id" :title="task.title" class="list-disc"/>
+            <DoneItem v-for="task in dateGroup.tasks" :key="task.id" :title="task.title" :id="task.id" class="list-disc"
+            @undoComplete="(todoId) => undoComplete(todoId)"
+            />
           </li>
         </ul>
       </div>
