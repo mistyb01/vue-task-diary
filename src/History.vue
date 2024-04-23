@@ -1,5 +1,5 @@
 <script setup>
-import { computed, watch } from "vue";
+import { computed } from "vue";
 import { useStorage } from "@vueuse/core";
 import DoneItem from "./components/DoneItem.vue";
 import { ArrowLongLeftIcon } from "@heroicons/vue/24/outline";
@@ -24,15 +24,12 @@ function groupTasksByDate(taskArray) {
       date,
       tasks: tasksByDateObj[date]
     }})
-
     return tasksByDateArr;
 }
 
 const tasksByDateArray = computed(() => groupTasksByDate(completedTasks.value));
 
 function undoComplete(todoId) {
-  console.log('id', todoId)
-  console.log(tasks.value)
   const index = tasks.value.findIndex((t) => t.id === todoId);
   tasks.value[index].completionDate = null;
 }
