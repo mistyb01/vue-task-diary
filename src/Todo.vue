@@ -5,6 +5,8 @@ import DoneItem from "./components/DoneItem.vue";
 import TodoContainer from "./components/TodoContainer.vue";
 import DoneContainer from "./components/DoneContainer.vue";
 import TodoInput from "./components/TodoInput.vue";
+import EmptyMessage from "./components/EmptyMessage.vue";
+
 import { v4 as uuidv4 } from "uuid";
 import { useStorage } from "@vueuse/core";
 
@@ -89,9 +91,10 @@ const headingText = motivationalHeadings[randomIndex];
           @deleteTodo="(todoId) => deleteTodo(todoId)"
           @submitEdit="(todoId, editedTitle) => editTodo(todoId, editedTitle)"
         />
-        <span v-if="!incompleteTasks.length"
-          >Let's do something! Add a task.</span
-        >
+        <EmptyMessage 
+          v-if="!incompleteTasks.length"
+          msg="Let's do something! Add a task."
+        />
       </TodoContainer>
       <DoneContainer v-if="completedTasks.length">
         <h2 class="text-xl">Completed!</h2>

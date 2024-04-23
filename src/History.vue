@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { useStorage } from "@vueuse/core";
 import DoneItem from "./components/DoneItem.vue";
 import { ArrowLongLeftIcon } from "@heroicons/vue/24/outline";
+import EmptyMessage from "./components/EmptyMessage.vue";
 
 const tasks = useStorage("task-store", []);
 const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate));
@@ -29,6 +30,8 @@ function groupTasksByDate(taskArray) {
 
 const tasksByDateArray = computed(() => groupTasksByDate(completedTasks.value));
 
+const hasCompleted = computed(() => completedTasks.value.length > 0);
+
 // TODO: try to reduce redundancy, this function is also used in Todo.vue
 function undoComplete(todoId) {
   const index = tasks.value.findIndex((t) => t.id === todoId);
@@ -47,7 +50,7 @@ function undoComplete(todoId) {
     </header>
 
     <main>
-      <div class="flex flex-col gap-8">
+      <div v-if="hasCompleted" class="flex flex-col gap-8">
         <ul v-for="dateGroup in tasksByDateArray" :key="dateGroup.date">
           <h3 class="font-bold">
             {{ dateGroup.date }}
@@ -59,6 +62,8 @@ function undoComplete(todoId) {
           </li>
         </ul>
       </div>
+      <EmptyMessage v-else msg="Nothing yet!"/>
+      
     </main>
   </div>
 </template>
