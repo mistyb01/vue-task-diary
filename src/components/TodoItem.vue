@@ -6,8 +6,7 @@ import {
   CheckIcon,
   XMarkIcon,
 } from "@heroicons/vue/24/outline";
-const model = defineModel();
-const emit = defineEmits(["deleteTodo", "submitEdit"]);
+const emit = defineEmits(["checkTodo", "deleteTodo", "submitEdit"]);
 
 defineProps(["title", "id"]);
 
@@ -27,7 +26,7 @@ const iconStyles = "h-5 w-5 hover:text-pink-500";
     class="flex justify-between p-4 rounded hover:bg-pink-50 transition-colors duration-150"
   >
     <div class="flex gap-4">
-      <input v-model="model" type="checkbox" />
+      <input @click="$emit('checkTodo', id)" type="checkbox" />
       <div>
         <span v-if="!isEditing">{{ title }}</span>
         <input
