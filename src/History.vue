@@ -7,26 +7,28 @@ import { ArrowLongLeftIcon } from "@heroicons/vue/24/outline";
 const tasks = useStorage("task-store", []);
 const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate));
 
-let tasksByDateObj = {}
-watch(completedTasks, (newCompletedTasks) => {
-  newCompletedTasks.forEach((task) => {
-    let dateStr = task.completionDate;
-    if (tasksByDateObj[dateStr]) {
-      tasksByDateObj[dateStr].push(task);
-    } else {
-      tasksByDateObj[dateStr] = [task];
-    }
-  })
-},
-{ immediate: true }
-)
 
-const tasksByDateArray = computed(() => Object.keys(tasksByDateObj).map((date) => {
-  return {
-    date,
-    tasks: tasksByDateObj[date]
-  }
-}))
+function groupTasksByDate(taskArray) {
+  let tasksByDateObj = {}
+  taskArray.forEach((task) => {
+      let dateStr = task.completionDate;
+      if (tasksByDateObj[dateStr]) {
+        tasksByDateObj[dateStr].push(task);
+      } else {
+        tasksByDateObj[dateStr] = [task];
+      }
+    })
+    // convert object to an array
+    let tasksByDateArr = Object.keys(tasksByDateObj).map((date) => {
+    return {
+      date,
+      tasks: tasksByDateObj[date]
+    }})
+
+    return tasksByDateArr;
+}
+
+const tasksByDateArray = groupTasksByDate(completedTasks.value);
 
 function undoComplete(todoId) {
   console.log('id', todoId)
