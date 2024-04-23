@@ -29,6 +29,7 @@ function groupTasksByDate(taskArray) {
 
 const tasksByDateArray = computed(() => groupTasksByDate(completedTasks.value));
 
+// TODO: try to reduce redundancy, this function is also used in Todo.vue
 function undoComplete(todoId) {
   const index = tasks.value.findIndex((t) => t.id === todoId);
   tasks.value[index].completionDate = null;
