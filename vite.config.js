@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
-  base: "https://mistyb01.github.io/vue-task-diary/",
+  base: "https://vue-task-diary.netlify.app/",
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
