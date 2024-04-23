@@ -28,7 +28,7 @@ function groupTasksByDate(taskArray) {
     return tasksByDateArr;
 }
 
-const tasksByDateArray = groupTasksByDate(completedTasks.value);
+const tasksByDateArray = computed(() => groupTasksByDate(completedTasks.value));
 
 function undoComplete(todoId) {
   console.log('id', todoId)
