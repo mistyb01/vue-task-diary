@@ -18,6 +18,7 @@ const tasks = useStorage("task-store", [
     title: "example task",
     creationDate: new Date(),
     completionDate: todaysDate,
+    subtasks: []
   },
 ]);
 
@@ -29,6 +30,7 @@ function addTodo() {
     title: newTodoTitle.value,
     creationDate: todaysDate,
     completionDate: null,
+    subtasks: []
   };
   tasks.value.push(todoObj);
   newTodoTitle.value = "";
@@ -51,6 +53,17 @@ function editTodo(todoId, editedTitle) {
 function checkTodo(todoId) {
   const index = tasks.value.findIndex((t) => t.id === todoId);
   tasks.value[index].completionDate = todaysDate;
+}
+
+function addSubtask(todoId) {
+  const subtask = {
+    id: uuidv4(),
+    title: "a subtask",
+    creationDate: new Date(),
+    completionDate: todaysDate,
+  }
+  const index = tasks.value.findIndex((t) => t.id === todoId);
+  tasks.value[index].subtasks.push(subtask);
 }
 
 const incompleteTasks = computed(() => tasks.value.filter((t) => !t.completionDate));
@@ -91,6 +104,7 @@ const headingText = motivationalHeadings[randomIndex];
           @deleteTodo="(todoId) => deleteTodo(todoId)"
           @submitEdit="(todoId, editedTitle) => editTodo(todoId, editedTitle)"
         />
+        <!-- @addSubtask="(todoId) => addSubtask(todoId)" -->
         <EmptyMessage 
           v-if="!incompleteTasks.length"
           msg="Let's do something! Add a task."

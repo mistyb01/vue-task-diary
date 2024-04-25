@@ -1,5 +1,5 @@
 <script setup>
-import { ref, toRefs } from "vue";
+import { ref } from "vue";
 import {
   TrashIcon,
   PencilIcon,
@@ -7,17 +7,23 @@ import {
   XMarkIcon,
 } from "@heroicons/vue/24/outline";
 import SubtaskIcon from "../assets/SubtaskIcon.vue"
+import SubtaskItem from "./SubtaskItem.vue"
 
-const emit = defineEmits(["checkTodo", "deleteTodo", "submitEdit"]);
+const emit = defineEmits(["checkTodo", "deleteTodo", "submitEdit", "addSubtask"]);
 
 defineProps(["title", "id"]);
 
 const isEditing = ref(false);
 const editedTitle = ref("");
+const isAddingSubtask = ref(false);
 
 function toggleEditMode(title) {
   isEditing.value = !isEditing.value;
   editedTitle.value = title;
+}
+
+function toggleSubtaskInput() {
+  isAddingSubtask.value = !isAddingSubtask.value;
 }
 
 const iconStyles = "h-5 w-5 hover:text-pink-500";
@@ -55,12 +61,15 @@ const iconStyles = "h-5 w-5 hover:text-pink-500";
         <PencilIcon v-if="!isEditing" :class="iconStyles" />
         <XMarkIcon v-else :class="iconStyles" />
       </button>
-      <button v-if="!isEditing">
+      <button v-if="!isEditing" @click="() => toggleSubtaskInput()">
         <SubtaskIcon />
       </button>
       <button v-if="!isEditing" @click="$emit('deleteTodo', id)">
         <TrashIcon :class="iconStyles" />
       </button>
     </div>
+  </div>
+  <div v-if="isAddingSubtask">
+    <SubtaskItem />
   </div>
 </template>
