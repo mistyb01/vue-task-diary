@@ -6,6 +6,8 @@ import {
   CheckIcon,
   XMarkIcon,
 } from "@heroicons/vue/24/outline";
+import SubtaskIcon from "../assets/SubtaskIcon.vue"
+
 const emit = defineEmits(["checkTodo", "deleteTodo", "submitEdit"]);
 
 defineProps(["title", "id"]);
@@ -52,6 +54,9 @@ const iconStyles = "h-5 w-5 hover:text-pink-500";
       <button @click="() => toggleEditMode(title)">
         <PencilIcon v-if="!isEditing" :class="iconStyles" />
         <XMarkIcon v-else :class="iconStyles" />
+      </button>
+      <button v-if="!isEditing">
+        <SubtaskIcon />
       </button>
       <button v-if="!isEditing" @click="$emit('deleteTodo', id)">
         <TrashIcon :class="iconStyles" />
