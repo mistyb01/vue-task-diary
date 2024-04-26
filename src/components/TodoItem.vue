@@ -7,7 +7,7 @@ import {
   XMarkIcon,
 } from "@heroicons/vue/24/outline";
 import SubtaskIcon from "../assets/SubtaskIcon.vue"
-import SubtaskItem from "./SubtaskItem.vue"
+import SubtaskInput from "./SubtaskInput.vue"
 
 const emit = defineEmits(["checkTodo", "deleteTodo", "submitEdit", "addSubtask"]);
 
@@ -57,12 +57,12 @@ const iconStyles = "h-5 w-5 hover:text-pink-500";
       >
         <CheckIcon :class="iconStyles" />
       </button>
+      <button v-if="!isEditing" @click="() => toggleSubtaskInput()">
+        <SubtaskIcon />
+      </button>
       <button @click="() => toggleEditMode(title)">
         <PencilIcon v-if="!isEditing" :class="iconStyles" />
         <XMarkIcon v-else :class="iconStyles" />
-      </button>
-      <button v-if="!isEditing" @click="() => toggleSubtaskInput()">
-        <SubtaskIcon />
       </button>
       <button v-if="!isEditing" @click="$emit('deleteTodo', id)">
         <TrashIcon :class="iconStyles" />
@@ -70,6 +70,6 @@ const iconStyles = "h-5 w-5 hover:text-pink-500";
     </div>
   </div>
   <div v-if="isAddingSubtask">
-    <SubtaskItem />
+    <SubtaskInput />
   </div>
 </template>
