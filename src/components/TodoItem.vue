@@ -70,6 +70,6 @@ const iconStyles = "h-5 w-5 hover:text-pink-500";
     </div>
   </div>
   <div v-if="isAddingSubtask">
-    <SubtaskInput />
+    <SubtaskInput @addSubtask="(title)=>emit('addSubtask', id, title)"/>
   </div>
 </template>

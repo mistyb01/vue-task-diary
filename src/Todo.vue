@@ -55,12 +55,12 @@ function checkTodo(todoId) {
   tasks.value[index].completionDate = todaysDate;
 }
 
-function addSubtask(todoId) {
+function addSubtask(todoId, subtaskTitle) {
   const subtask = {
     id: uuidv4(),
-    title: "a subtask",
+    title: subtaskTitle,
     creationDate: new Date(),
-    completionDate: todaysDate,
+    completionDate: null,
   }
   const index = tasks.value.findIndex((t) => t.id === todoId);
   tasks.value[index].subtasks.push(subtask);
@@ -103,7 +103,8 @@ const headingText = motivationalHeadings[randomIndex];
           @checkTodo="(todoId) => checkTodo(todoId)"
           @deleteTodo="(todoId) => deleteTodo(todoId)"
           @submitEdit="(todoId, editedTitle) => editTodo(todoId, editedTitle)"
-        />
+          @addSubtask="(todoId, title) => addSubtask(todoId, title)"
+          />
         <!-- @addSubtask="(todoId) => addSubtask(todoId)" -->
         <EmptyMessage 
           v-if="!incompleteTasks.length"
