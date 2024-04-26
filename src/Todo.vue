@@ -100,6 +100,7 @@ const headingText = motivationalHeadings[randomIndex];
           :key="task.id"
           :id="task.id"
           :title="task.title"
+          :subtasks="task.subtasks"
           @checkTodo="(todoId) => checkTodo(todoId)"
           @deleteTodo="(todoId) => deleteTodo(todoId)"
           @submitEdit="(todoId, editedTitle) => editTodo(todoId, editedTitle)"

@@ -8,10 +8,11 @@ import {
 } from "@heroicons/vue/24/outline";
 import SubtaskIcon from "../assets/SubtaskIcon.vue"
 import SubtaskInput from "./SubtaskInput.vue"
+import SubtaskItem from "./SubtaskItem.vue"
 
 const emit = defineEmits(["checkTodo", "deleteTodo", "submitEdit", "addSubtask"]);
 
-defineProps(["title", "id"]);
+defineProps(["title", "id", "subtasks"]);
 
 const isEditing = ref(false);
 const editedTitle = ref("");
@@ -71,5 +72,12 @@ const iconStyles = "h-5 w-5 hover:text-pink-500";
   </div>
   <div v-if="isAddingSubtask">
     <SubtaskInput @addSubtask="(title)=>emit('addSubtask', id, title)"/>
+  </div>
+  <div v-if="subtasks.length > 0">
+    <SubtaskItem
+      v-for="subtask in subtasks"
+      :key="subtask.id"
+      :title="subtask.title"
+    />
   </div>
 </template>
