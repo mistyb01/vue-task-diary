@@ -6,8 +6,8 @@ const emit = defineEmits(["addSubtask"]);
 </script>
 
 <template>
-  <div class="flex gap-2 p-4">
-    <div class="pl-8 flex gap-2">
+  <div class="flex gap-2 pt-4">
+    <div class="pl-4 flex gap-2">
         <input
           v-model="title"
           placeholder="new subtask"
