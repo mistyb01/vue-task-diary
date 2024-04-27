@@ -56,8 +56,14 @@ function undoComplete(todoId) {
             {{ dateGroup.date }}
           </h3>        
           <li>
-            <DoneItem v-for="task in dateGroup.tasks" :key="task.id" :title="task.title" :id="task.id" class="list-disc"
-            @undoComplete="(todoId) => undoComplete(todoId)"
+            <DoneItem 
+              v-for="task in dateGroup.tasks" 
+              :key="task.id" 
+              :title="task.title" 
+              :id="task.id" 
+              :subtasks="task.subtasks"
+              class="list-disc"
+              @undoComplete="(todoId) => undoComplete(todoId)"
             />
           </li>
         </ul>
