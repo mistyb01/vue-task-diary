@@ -18,7 +18,7 @@ const emit = defineEmits(["addSubtask"]);
           type="submit"
           @click="() => {
             $emit('addSubtask', title)
-            title.value = ''
+            title = ''
             }"
           class="text-pink-500 border border-1 border-pink-500 px-2"><span aria-hidden="true">+ </span>add</button>
       </div>
