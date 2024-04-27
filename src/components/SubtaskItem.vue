@@ -4,8 +4,9 @@ import {
   PencilIcon,
 } from "@heroicons/vue/24/outline";
 
+const emit = defineEmits(["deleteSubtask"])
 const model = defineModel();
-defineProps(["title", "editModeOn"]);
+defineProps(["title", "id", "editModeOn"]);
 
 const iconStyles = "h-5 w-5 hover:text-pink-500";
 </script>
@@ -20,7 +21,8 @@ const iconStyles = "h-5 w-5 hover:text-pink-500";
         <span class="text-gray-500">{{ title }}</span>
       </div>
     </div>
-    <div v-if="editModeOn"><TrashIcon :class="iconStyles"/></div>
+    <div v-if="editModeOn">
+      <TrashIcon @click="$emit('deleteSubtask', id)" :class="iconStyles"/></div>
   </div>
 
 </template>

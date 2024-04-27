@@ -65,6 +65,11 @@ function addSubtask(todoId, subtaskTitle) {
   tasks.value[index].subtasks.push(subtask);
 }
 
+function deleteSubtask(todoId, subId) {
+  const index = tasks.value.findIndex((t) => t.id === todoId);
+  tasks.value[index].subtasks = tasks.value[index].subtasks.filter((s) => s.id !== subId);  
+}
+
 const incompleteTasks = computed(() => tasks.value.filter((t) => !t.completionDate));
 const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate));
 
@@ -104,6 +109,7 @@ const headingText = motivationalHeadings[randomIndex];
           @deleteTodo="(todoId) => deleteTodo(todoId)"
           @submitEdit="(todoId, editedTitle) => editTodo(todoId, editedTitle)"
           @addSubtask="(todoId, title) => addSubtask(todoId, title)"
+          @deleteSubtask="(todoId, subId) => deleteSubtask(todoId, subId)"
           />
         <!-- @addSubtask="(todoId) => addSubtask(todoId)" -->
         <EmptyMessage 

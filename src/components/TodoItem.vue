@@ -10,7 +10,7 @@ import SubtaskIcon from "../assets/SubtaskIcon.vue"
 import SubtaskInput from "./SubtaskInput.vue"
 import SubtaskItem from "./SubtaskItem.vue"
 
-const emit = defineEmits(["checkTodo", "deleteTodo", "submitEdit", "addSubtask"]);
+const emit = defineEmits(["checkTodo", "deleteTodo", "submitEdit", "addSubtask", "deleteSubtask"]);
 
 defineProps(["title", "id", "subtasks"]);
 
@@ -84,6 +84,7 @@ const iconStyles = "h-5 w-5 hover:text-pink-500";
         :title="subtask.title"
         :id="subtask.id"
         :editModeOn="isEditing"
+        @deleteSubtask="(subId)=>emit('deleteSubtask', id, subId)"
       />
     </div>
   </div>
