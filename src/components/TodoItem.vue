@@ -83,6 +83,7 @@ const iconStyles = "h-5 w-5 hover:text-pink-500";
         :key="subtask.id"
         :title="subtask.title"
         :id="subtask.id"
+        :editModeOn="isEditing"
       />
     </div>
   </div>

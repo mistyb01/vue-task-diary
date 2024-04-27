@@ -112,7 +112,7 @@ const headingText = motivationalHeadings[randomIndex];
         />
       </TodoContainer>
       <DoneContainer v-if="completedTasks.length">
-        <h2 class="text-xl">Completed!</h2>
+        <h2 class="text-xl">Completed today</h2>
         <TodoContainer>
           <DoneItem
             v-for="task in completedTasks"
