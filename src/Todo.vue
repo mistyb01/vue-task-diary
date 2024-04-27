@@ -18,6 +18,7 @@ const tasks = useStorage("task-store", [
     title: "example task",
     creationDate: new Date(),
     completionDate: todaysDate,
+    subtasks: []
   },
 ]);
 
@@ -29,6 +30,7 @@ function addTodo() {
     title: newTodoTitle.value,
     creationDate: todaysDate,
     completionDate: null,
+    subtasks: []
   };
   tasks.value.push(todoObj);
   newTodoTitle.value = "";
@@ -51,6 +53,21 @@ function editTodo(todoId, editedTitle) {
 function checkTodo(todoId) {
   const index = tasks.value.findIndex((t) => t.id === todoId);
   tasks.value[index].completionDate = todaysDate;
+}
+
+function addSubtask(todoId, subtaskTitle) {
+  const subtask = {
+    id: uuidv4(),
+    title: subtaskTitle,
+    completed: false
+  }
+  const index = tasks.value.findIndex((t) => t.id === todoId);
+  tasks.value[index].subtasks.push(subtask);
+}
+
+function deleteSubtask(todoId, subId) {
+  const index = tasks.value.findIndex((t) => t.id === todoId);
+  tasks.value[index].subtasks = tasks.value[index].subtasks.filter((s) => s.id !== subId);  
 }
 
 const incompleteTasks = computed(() => tasks.value.filter((t) => !t.completionDate));
@@ -87,23 +104,28 @@ const headingText = motivationalHeadings[randomIndex];
           :key="task.id"
           :id="task.id"
           :title="task.title"
+          :subtasks="task.subtasks"
           @checkTodo="(todoId) => checkTodo(todoId)"
           @deleteTodo="(todoId) => deleteTodo(todoId)"
           @submitEdit="(todoId, editedTitle) => editTodo(todoId, editedTitle)"
-        />
+          @addSubtask="(todoId, title) => addSubtask(todoId, title)"
+          @deleteSubtask="(todoId, subId) => deleteSubtask(todoId, subId)"
+          />
+        <!-- @addSubtask="(todoId) => addSubtask(todoId)" -->
         <EmptyMessage 
           v-if="!incompleteTasks.length"
           msg="Let's do something! Add a task."
         />
       </TodoContainer>
       <DoneContainer v-if="completedTasks.length">
-        <h2 class="text-xl">Completed!</h2>
+        <h2 class="text-xl">Completed today</h2>
         <TodoContainer>
           <DoneItem
             v-for="task in completedTasks"
             :key="task.id"
             :id="task.id"
             :title="task.title"
+            :subtasks="task.subtasks"
             @undoComplete="(todoId) => undoComplete(todoId)"
           />
         </TodoContainer>
