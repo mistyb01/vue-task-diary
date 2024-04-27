@@ -51,11 +51,10 @@ function undoComplete(todoId) {
 
     <main>
       <div v-if="hasCompleted" class="flex flex-col gap-8">
-        <ul v-for="dateGroup in tasksByDateArray" :key="dateGroup.date">
+        <div v-for="dateGroup in tasksByDateArray" :key="dateGroup.date">
           <h3 class="font-bold">
-            {{ dateGroup.date }}
+            {{ dateGroup.date.replaceAll('/','.') }}
           </h3>        
-          <li>
             <DoneItem 
               v-for="task in dateGroup.tasks" 
               :key="task.id" 
@@ -65,8 +64,8 @@ function undoComplete(todoId) {
               class="list-disc"
               @undoComplete="(todoId) => undoComplete(todoId)"
             />
-          </li>
-        </ul>
+            <hr class="w-24 h-0.5 my-8 bg-pink-100 border-0 rounded md:my-10">
+        </div>
       </div>
       <EmptyMessage v-else msg="Nothing yet!"/>
       
