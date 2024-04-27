@@ -10,7 +10,7 @@ defineProps(["title"]);
     <div class="flex gap-4">
       <input v-model="model" type="checkbox" />
       <div>
-        <span>{{ title }}</span>
+        <span class="text-gray-500">{{ title }}</span>
       </div>
     </div>
   </div>
