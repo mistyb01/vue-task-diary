@@ -119,6 +119,7 @@ const headingText = motivationalHeadings[randomIndex];
             :key="task.id"
             :id="task.id"
             :title="task.title"
+            :subtasks="task.subtasks"
             @undoComplete="(todoId) => undoComplete(todoId)"
           />
         </TodoContainer>
