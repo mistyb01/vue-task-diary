@@ -2,7 +2,7 @@
 import { ref } from "vue";
 const title = ref("")
 
-const emit = defineEmits(["addSubtask"]);
+const emit = defineEmits(["addSubtask", "closeInput"]);
 </script>
 
 <template>
@@ -21,6 +21,10 @@ const emit = defineEmits(["addSubtask"]);
             title = ''
             }"
           class="text-pink-500 border border-1 border-pink-500 px-2"><span aria-hidden="true">+ </span>add</button>
+          <button 
+          type="submit"
+          @click="$emit('closeInput')"
+          class="text-gray-400 border border-1 border-gray-400 px-2"><span aria-hidden="true">&times; </span>close</button>
       </div>
   </div>
 </template>

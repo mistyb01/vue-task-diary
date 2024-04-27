@@ -72,7 +72,10 @@ const iconStyles = "h-5 w-5 hover:text-pink-500";
       </div>
     </div>
     <div v-if="isAddingSubtask">
-      <SubtaskInput @addSubtask="(title)=>emit('addSubtask', id, title)"/>
+      <SubtaskInput 
+        @addSubtask="(title)=>emit('addSubtask', id, title)"
+        @closeInput="()=>toggleSubtaskInput()"
+        />
     </div>
     <div 
       v-if="subtasks.length > 0"
@@ -85,7 +88,7 @@ const iconStyles = "h-5 w-5 hover:text-pink-500";
         :id="subtask.id"
         :editModeOn="isEditing"
         @deleteSubtask="(subId)=>emit('deleteSubtask', id, subId)"
-      />
+        />
     </div>
   </div>
 </template>
