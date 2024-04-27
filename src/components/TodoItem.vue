@@ -79,8 +79,10 @@ const iconStyles = "h-5 w-5 hover:text-pink-500";
       class="pl-8">
       <SubtaskItem
         v-for="subtask in subtasks"
+        v-model="subtask.completed"
         :key="subtask.id"
         :title="subtask.title"
+        :id="subtask.id"
       />
     </div>
   </div>

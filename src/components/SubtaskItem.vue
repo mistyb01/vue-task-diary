@@ -1,9 +1,6 @@
 <script setup>
-import { ref } from "vue";
-
-const emit = defineEmits(["checkTodo"]);
-
-defineProps(["title", "id"]);
+const model = defineModel();
+defineProps(["title"]);
 </script>
 
 <template>
@@ -11,7 +8,7 @@ defineProps(["title", "id"]);
     class="flex justify-between p-4 rounded hover:bg-pink-50 transition-colors duration-150"
   >
     <div class="flex gap-4">
-      <input @click="$emit('checkTodo', id)" type="checkbox" />
+      <input v-model="model" type="checkbox" />
       <div>
         <span>{{ title }}</span>
       </div>

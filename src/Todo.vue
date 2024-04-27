@@ -59,8 +59,7 @@ function addSubtask(todoId, subtaskTitle) {
   const subtask = {
     id: uuidv4(),
     title: subtaskTitle,
-    creationDate: new Date(),
-    completionDate: null,
+    completed: false
   }
   const index = tasks.value.findIndex((t) => t.id === todoId);
   tasks.value[index].subtasks.push(subtask);
