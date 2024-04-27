@@ -121,7 +121,7 @@ const headingText = motivationalHeadings[randomIndex];
         <h2 class="text-xl">Completed today</h2>
         <TodoContainer>
           <DoneItem
-            v-for="task in completedTasks"
+            v-for="task in completedTasks.filter(t=>t.completionDate === todaysDate)"
             :key="task.id"
             :id="task.id"
             :title="task.title"
