@@ -84,7 +84,7 @@ function undoComplete(todoId) {
     <main>
       <div v-if="hasCompleted" class="flex flex-col gap-8">
         <div v-for="dateGroup in tasksByDateArray" :key="dateGroup.date">
-          <h3 class="font-bold capitalize">
+          <h3 class="font-light capitalize text-pink-400">
             {{ dateGroup.date === todayString ? 'today' : 
             dateGroup.date === yesterdayString ? 'yesterday' :
             formatDate(dateGroup.date)}}
