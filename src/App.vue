@@ -2,10 +2,12 @@
 import { ref, computed } from "vue";
 import Todo from "./Todo.vue";
 import History from "./History.vue";
+import Preferences from "./Preferences.vue";
 
 const routes = {
   "/": Todo,
   "/history": History,
+  "/preferences": Preferences
 };
 
 const currentPath = ref(window.location.hash);
@@ -20,5 +22,6 @@ const currentView = computed(() => {
 </script>
 
 <template>
+  <Navbar/>
   <component :is="currentView" />
 </template>

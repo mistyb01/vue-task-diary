@@ -1,13 +1,19 @@
 <script setup>
 import { computed } from "vue";
 import { useStorage } from "@vueuse/core";
+import LayoutContainer from "./components/LayoutContainer.vue";
 import DoneItem from "./components/DoneItem.vue";
-import { ArrowLongLeftIcon } from "@heroicons/vue/24/outline";
 import EmptyMessage from "./components/EmptyMessage.vue";
+import { ArrowLongLeftIcon } from "@heroicons/vue/24/outline";
 
 const tasks = useStorage("task-store", []);
 const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate));
 
+const todayString = new Date().toISOString().substring(0,10);
+
+let yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+const yesterdayString = yesterday.toISOString().substring(0,10);
 
 function groupTasksByDate(taskArray) {
   let tasksByDateObj = {}
@@ -25,7 +31,9 @@ function groupTasksByDate(taskArray) {
       date,
       tasks: tasksByDateObj[date]
     }})
-    return tasksByDateArr;
+    
+    let tasksByDateArrDateDescending = tasksByDateArr.sort((a,b) => b.date - a.date);
+    return tasksByDateArrDateDescending;
 }
 
 const tasksByDateArray = computed(() => groupTasksByDate(completedTasks.value));
@@ -40,20 +48,14 @@ function undoComplete(todoId) {
 </script>
 
 <template>
-  <div class="container mx-auto p-4 max-w-screen-sm min-h-screen">
-      <a href="#/" class="my-4 text-pink-400 flex gap-2 items-center">
-        <ArrowLongLeftIcon class="w-5 h-5"/> back to todo list
-      </a>
-    
-    <header class="my-8">
-      <h1 class="font-semibold text-2xl text-pink-500">History</h1>
-    </header>
-
+  <LayoutContainer headingText="History">    
     <main>
       <div v-if="hasCompleted" class="flex flex-col gap-8">
         <div v-for="dateGroup in tasksByDateArray" :key="dateGroup.date">
           <h3 class="font-bold">
-            {{ dateGroup.date.replaceAll('/','.') }}
+            {{ dateGroup.date === todayString ? 'Today' : 
+            dateGroup.date === yesterdayString ? 'Yesterday' :
+            dateGroup.date.replaceAll('/','.') }}
           </h3>        
             <DoneItem 
               v-for="task in dateGroup.tasks" 
@@ -64,13 +66,12 @@ function undoComplete(todoId) {
               class="list-disc"
               @undoComplete="(todoId) => undoComplete(todoId)"
             />
-            <hr class="w-24 h-0.5 my-8 bg-pink-100 border-0 rounded md:my-10">
         </div>
       </div>
       <EmptyMessage v-else msg="Nothing yet!"/>
       
     </main>
-  </div>
+  </LayoutContainer>
 </template>
 
 <style scoped>
