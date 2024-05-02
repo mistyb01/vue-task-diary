@@ -17,7 +17,7 @@ const yesterdayString = yesterday.toISOString().substring(0,10);
 function groupTasksByDate(taskArray) {
   let tasksByDateObj = {}
   taskArray.forEach((task) => {
-      let dateStr = task.completionDate;
+      let dateStr = new Date(task.completionDate).toISOString().substring(0,10);
       if (tasksByDateObj[dateStr]) {
         tasksByDateObj[dateStr].push(task);
       } else {
