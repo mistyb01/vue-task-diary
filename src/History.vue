@@ -14,10 +14,38 @@ let yesterday = new Date();
 yesterday.setDate(yesterday.getDate() - 1);
 const yesterdayString = yesterday.toISOString().substring(0,10);
 
+// function below was gpt-assisted
+// converts a yyyy-mm-dd string into a string with abbreviated month and day.
+function formatDate(inputDate) {
+    // Parse the input date string
+    const parts = inputDate.split('-');
+    const year = parseInt(parts[0]);
+    const month = parseInt(parts[1], 10);
+    const day = parseInt(parts[2], 10);
+
+    // Create a Date object
+    const date = new Date(year, month - 1, day);
+
+    // Get the month name
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthName = monthNames[date.getMonth()];
+
+    let formattedString = monthName + ' ' + day;
+  
+    // only append the year if it is not the current one
+    const currentYear = new Date().getFullYear();
+    if (year !== currentYear) {
+      formattedString = formattedString + ', ' + year
+    } 
+
+    return formattedString;
+}
+
 function groupTasksByDate(taskArray) {
   let tasksByDateObj = {}
   taskArray.forEach((task) => {
-      let dateStr = task.completionDate;
+      // date field is converted to yyyy-mm-dd string
+      let dateStr = new Date(task.completionDate).toISOString().substring(0,10);
       if (tasksByDateObj[dateStr]) {
         tasksByDateObj[dateStr].push(task);
       } else {
@@ -31,7 +59,8 @@ function groupTasksByDate(taskArray) {
       tasks: tasksByDateObj[date]
     }})
     
-    let tasksByDateArrDateDescending = tasksByDateArr.sort((a,b) => b.date - a.date);
+    let tasksByDateArrDateDescending = tasksByDateArr.sort((a,b) => a.date < b.date);
+    console.log(tasksByDateArrDateDescending)
     return tasksByDateArrDateDescending;
 }
 
@@ -55,17 +84,15 @@ function undoComplete(todoId) {
     <main>
       <div v-if="hasCompleted" class="flex flex-col gap-8">
         <div v-for="dateGroup in tasksByDateArray" :key="dateGroup.date">
-          <h3 class="font-bold">
-            {{ dateGroup.date === todayString ? 'Today' : 
-            dateGroup.date === yesterdayString ? 'Yesterday' :
-            dateGroup.date.replaceAll('/','.') }}
+          <h3 class="font-light capitalize text-pink-400">
+            {{ dateGroup.date === todayString ? 'today' : 
+            dateGroup.date === yesterdayString ? 'yesterday' :
+            formatDate(dateGroup.date)}}
           </h3>        
             <DoneItem 
               v-for="task in dateGroup.tasks" 
               :key="task.id" 
-              :title="task.title" 
-              :id="task.id" 
-              :subtasks="task.subtasks"
+              :task="task"
               class="list-disc"
               @undoComplete="(todoId) => undoComplete(todoId)"
             />

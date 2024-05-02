@@ -11,14 +11,12 @@ import EmptyMessage from "./components/EmptyMessage.vue";
 import { v4 as uuidv4 } from "uuid";
 import { useStorage } from "@vueuse/core";
 
-const todaysDate = new Date().toISOString().substring(0,10);
-
 const completedTasks = useStorage("completed-task-store", [
   {
     id: uuidv4(),
     title: "you can click the checkmark to 'undo'",
     creationDate: new Date(),
-    completionDate: todaysDate,
+    completionDate: new Date(),
     subtasks: []
   },
 ]);
@@ -60,7 +58,7 @@ function addTodo() {
   const todoObj = {
     id: uuidv4(),
     title: newTodoTitle.value,
-    creationDate: todaysDate,
+    creationDate: new Date(),
     completionDate: null,
     subtasks: []
   };
@@ -89,7 +87,7 @@ function editTodo(todoId, editedTitle) {
 function checkTodo(todoId) {
   const index = todos.value.findIndex((t) => t.id === todoId);
   let currentTodo = todos.value[index];
-  currentTodo.completionDate = todaysDate;
+  currentTodo.completionDate = new Date();
 
   completedTasks.value.push(currentTodo);
   todos.value = todos.value.filter((t) => t.id !== todoId);
@@ -154,11 +152,9 @@ const headingText = motivationalHeadings[randomIndex];
         <h2 class="text-xl">Completed today</h2>
         <TodoContainer>
           <DoneItem
-            v-for="task in completedTasks.filter(t=>t.completionDate === todaysDate)"
-            :key="task.id"
-            :id="task.id"
-            :title="task.title"
-            :subtasks="task.subtasks"
+            v-for="task in completedTasks.filter(t=>new Date(t.completionDate).toDateString() === new Date().toDateString())"
+            :key="task.id" 
+            :task="task"
             @undoComplete="(todoId) => undoComplete(todoId)"
           />
         </TodoContainer>
