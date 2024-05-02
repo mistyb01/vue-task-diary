@@ -12,7 +12,7 @@ const showSubtasks = ref(false);
   <div class="flex flex-col">
     <div class="flex justify-between items-center">
       <div class="flex gap-2 items-center pt-2 ">
-        <button @click="$emit('undoComplete', id)" class="group">
+        <button @click="$emit('undoComplete', task.id)" class="group">
         <span class="group-hover:hidden"><CheckIcon class="w-4 h-4" /></span>
         <span class="group-hover:block hidden">
           <ArrowUturnLeftIcon class="w-4 h-4" />
