@@ -11,7 +11,7 @@ import EmptyMessage from "./components/EmptyMessage.vue";
 import { v4 as uuidv4 } from "uuid";
 import { useStorage } from "@vueuse/core";
 
-const todaysDate = new Date().toLocaleDateString();
+const todaysDate = new Date().toISOString().substring(0,10);
 
 const tasks = useStorage("task-store", [
   {

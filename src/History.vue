@@ -10,6 +10,7 @@ const tasks = useStorage("task-store", []);
 const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate));
 
 
+
 function groupTasksByDate(taskArray) {
   let tasksByDateObj = {}
   taskArray.forEach((task) => {
@@ -26,7 +27,9 @@ function groupTasksByDate(taskArray) {
       date,
       tasks: tasksByDateObj[date]
     }})
-    return tasksByDateArr;
+    
+    let tasksByDateArrDateDescending = tasksByDateArr.sort((a,b) => b.date - a.date);
+    return tasksByDateArrDateDescending;
 }
 
 const tasksByDateArray = computed(() => groupTasksByDate(completedTasks.value));
@@ -57,7 +60,6 @@ function undoComplete(todoId) {
               class="list-disc"
               @undoComplete="(todoId) => undoComplete(todoId)"
             />
-            <hr class="w-24 h-0.5 my-8 bg-pink-100 border-0 rounded md:my-10">
         </div>
       </div>
       <EmptyMessage v-else msg="Nothing yet!"/>
