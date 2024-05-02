@@ -41,11 +41,7 @@ function undoComplete(todoId) {
 </script>
 
 <template>
-  <LayoutContainer>    
-    <header class="my-8">
-      <h1 class="font-semibold text-2xl text-pink-500">History</h1>
-    </header>
-
+  <LayoutContainer headingText="History">    
     <main>
       <div v-if="hasCompleted" class="flex flex-col gap-8">
         <div v-for="dateGroup in tasksByDateArray" :key="dateGroup.date">

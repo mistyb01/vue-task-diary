@@ -92,11 +92,7 @@ const headingText = motivationalHeadings[randomIndex];
 </script>
 
 <template>
-  <LayoutContainer>
-    <header class="my-8">
-      <h1 class="font-semibold text-2xl text-pink-500">{{ headingText }}</h1>
-    </header>
-
+  <LayoutContainer :headingText="headingText">
     <main>
       <TodoInput v-model="newTodoTitle" @submitTodo="addTodo" />
       <TodoContainer>
