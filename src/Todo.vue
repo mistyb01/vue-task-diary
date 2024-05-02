@@ -13,12 +13,43 @@ import { useStorage } from "@vueuse/core";
 
 const todaysDate = new Date().toISOString().substring(0,10);
 
-const tasks = useStorage("task-store", [
+const completedTasks = useStorage("completed-task-store", [
   {
     id: uuidv4(),
-    title: "example task",
+    title: "you can click the checkmark to 'undo'",
     creationDate: new Date(),
     completionDate: todaysDate,
+    subtasks: []
+  },
+]);
+
+const todos = useStorage("pending-task-store", [
+  {
+    id: uuidv4(),
+    title: "here's an example todo",
+    creationDate: new Date(),
+    completionDate: null,
+    subtasks: []
+  },
+  {
+    id: uuidv4(),
+    title: "edit me",
+    creationDate: new Date(),
+    completionDate: null,
+    subtasks: []
+  },
+  {
+    id: uuidv4(),
+    title: "delete me",
+    creationDate: new Date(),
+    completionDate: null,
+    subtasks: []
+  },
+  {
+    id: uuidv4(),
+    title: "break me into smaller chunks! give me a subtask",
+    creationDate: new Date(),
+    completionDate: null,
     subtasks: []
   },
 ]);
@@ -33,27 +64,35 @@ function addTodo() {
     completionDate: null,
     subtasks: []
   };
-  tasks.value.push(todoObj);
+  todos.value.push(todoObj);
   newTodoTitle.value = "";
 }
 
 function deleteTodo(todoId) {
-  tasks.value = tasks.value.filter((t) => t.id !== todoId);
+  todos.value = todos.value.filter((t) => t.id !== todoId);
 }
 
 function undoComplete(todoId) {
-  const index = tasks.value.findIndex((t) => t.id === todoId);
-  tasks.value[index].completionDate = null;
+  const index = completedTasks.value.findIndex((t) => t.id === todoId);
+  let currentTodo = completedTasks.value[index];
+  currentTodo.completionDate = null;
+
+  todos.value.push(currentTodo);
+  completedTasks.value = completedTasks.value.filter((t) => t.id !== todoId);
 }
 
 function editTodo(todoId, editedTitle) {
-  const index = tasks.value.findIndex((t) => t.id === todoId);
-  tasks.value[index].title = editedTitle;
+  const index = todos.value.findIndex((t) => t.id === todoId);
+  todos.value[index].title = editedTitle;
 }
 
 function checkTodo(todoId) {
-  const index = tasks.value.findIndex((t) => t.id === todoId);
-  tasks.value[index].completionDate = todaysDate;
+  const index = todos.value.findIndex((t) => t.id === todoId);
+  let currentTodo = todos.value[index];
+  currentTodo.completionDate = todaysDate;
+
+  completedTasks.value.push(currentTodo);
+  todos.value = todos.value.filter((t) => t.id !== todoId);
 }
 
 function addSubtask(todoId, subtaskTitle) {
@@ -62,17 +101,14 @@ function addSubtask(todoId, subtaskTitle) {
     title: subtaskTitle,
     completed: false
   }
-  const index = tasks.value.findIndex((t) => t.id === todoId);
-  tasks.value[index].subtasks.push(subtask);
+  const index = todos.value.findIndex((t) => t.id === todoId);
+  todos.value[index].subtasks.push(subtask);
 }
 
 function deleteSubtask(todoId, subId) {
-  const index = tasks.value.findIndex((t) => t.id === todoId);
-  tasks.value[index].subtasks = tasks.value[index].subtasks.filter((s) => s.id !== subId);  
+  const index = todos.value.findIndex((t) => t.id === todoId);
+  todos.value[index].subtasks = tasks.value[index].subtasks.filter((s) => s.id !== subId);  
 }
-
-const incompleteTasks = computed(() => tasks.value.filter((t) => !t.completionDate));
-const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate === todaysDate));
 
 const motivationalHeadings = [
   "Seize the day.",
@@ -97,7 +133,7 @@ const headingText = motivationalHeadings[randomIndex];
       <TodoInput v-model="newTodoTitle" @submitTodo="addTodo" />
       <TodoContainer>
         <TodoItem
-          v-for="task in incompleteTasks"
+          v-for="task in todos"
           :key="task.id"
           :id="task.id"
           :title="task.title"
@@ -110,7 +146,7 @@ const headingText = motivationalHeadings[randomIndex];
           />
         <!-- @addSubtask="(todoId) => addSubtask(todoId)" -->
         <EmptyMessage 
-          v-if="!incompleteTasks.length"
+          v-if="!todos.length"
           msg="Let's do something! Add a task."
         />
       </TodoContainer>
