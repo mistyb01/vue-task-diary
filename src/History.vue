@@ -4,12 +4,9 @@ import { useStorage } from "@vueuse/core";
 import LayoutContainer from "./components/LayoutContainer.vue";
 import DoneItem from "./components/DoneItem.vue";
 import EmptyMessage from "./components/EmptyMessage.vue";
-import { ArrowLongLeftIcon } from "@heroicons/vue/24/outline";
 
 const completedTasks = useStorage("completed-task-store", []);
 const todos = useStorage("pending-task-store", []);
-
-// const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate));
 
 const todayString = new Date().toISOString().substring(0,10);
 
