@@ -153,10 +153,8 @@ const headingText = motivationalHeadings[randomIndex];
         <TodoContainer>
           <DoneItem
             v-for="task in completedTasks.filter(t=>new Date(t.completionDate).toDateString() === new Date().toDateString())"
-            :key="task.id"
-            :id="task.id"
-            :title="task.title"
-            :subtasks="task.subtasks"
+            :key="task.id" 
+            :task="task"
             @undoComplete="(todoId) => undoComplete(todoId)"
           />
         </TodoContainer>
