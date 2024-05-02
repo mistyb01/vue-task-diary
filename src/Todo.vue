@@ -71,7 +71,7 @@ function deleteSubtask(todoId, subId) {
 }
 
 const incompleteTasks = computed(() => tasks.value.filter((t) => !t.completionDate));
-const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate));
+const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate === todaysDate));
 
 const motivationalHeadings = [
   "Seize the day.",
