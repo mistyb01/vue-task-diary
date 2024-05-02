@@ -4,10 +4,9 @@ import { useStorage } from "@vueuse/core";
 import LayoutContainer from "./components/LayoutContainer.vue";
 import DoneItem from "./components/DoneItem.vue";
 import EmptyMessage from "./components/EmptyMessage.vue";
-import { ArrowLongLeftIcon } from "@heroicons/vue/24/outline";
 
-const tasks = useStorage("task-store", []);
-const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate));
+const completedTasks = useStorage("completed-task-store", []);
+const todos = useStorage("pending-task-store", []);
 
 const todayString = new Date().toISOString().substring(0,10);
 
@@ -42,8 +41,12 @@ const hasCompleted = computed(() => completedTasks.value.length > 0);
 
 // TODO: try to reduce redundancy, this function is also used in Todo.vue
 function undoComplete(todoId) {
-  const index = tasks.value.findIndex((t) => t.id === todoId);
-  tasks.value[index].completionDate = null;
+  const index = completedTasks.value.findIndex((t) => t.id === todoId);
+  let currentTodo = completedTasks.value[index];
+  currentTodo.completionDate = null;
+
+  todos.value.push(currentTodo);
+  completedTasks.value = completedTasks.value.filter((t) => t.id !== todoId);
 }
 </script>
 
