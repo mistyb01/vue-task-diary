@@ -1,9 +1,10 @@
 <script setup>
 import { computed } from "vue";
 import { useStorage } from "@vueuse/core";
+import LayoutContainer from "./components/LayoutContainer.vue";
 import DoneItem from "./components/DoneItem.vue";
-import { ArrowLongLeftIcon } from "@heroicons/vue/24/outline";
 import EmptyMessage from "./components/EmptyMessage.vue";
+import { ArrowLongLeftIcon } from "@heroicons/vue/24/outline";
 
 const tasks = useStorage("task-store", []);
 const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate));
@@ -40,11 +41,7 @@ function undoComplete(todoId) {
 </script>
 
 <template>
-  <div class="container mx-auto p-4 max-w-screen-sm min-h-screen">
-      <a href="#/" class="my-4 text-pink-400 flex gap-2 items-center">
-        <ArrowLongLeftIcon class="w-5 h-5"/> back to todo list
-      </a>
-    
+  <LayoutContainer>    
     <header class="my-8">
       <h1 class="font-semibold text-2xl text-pink-500">History</h1>
     </header>
@@ -70,7 +67,7 @@ function undoComplete(todoId) {
       <EmptyMessage v-else msg="Nothing yet!"/>
       
     </main>
-  </div>
+  </LayoutContainer>
 </template>
 
 <style scoped>

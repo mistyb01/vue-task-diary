@@ -20,5 +20,6 @@ const currentView = computed(() => {
 </script>
 
 <template>
+  <Navbar/>
   <component :is="currentView" />
 </template>

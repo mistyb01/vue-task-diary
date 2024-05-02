@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
+import LayoutContainer from "./components/LayoutContainer.vue";
 import TodoItem from "./components/TodoItem.vue";
 import DoneItem from "./components/DoneItem.vue";
 import TodoContainer from "./components/TodoContainer.vue";
@@ -91,7 +92,7 @@ const headingText = motivationalHeadings[randomIndex];
 </script>
 
 <template>
-  <div class="container mx-auto p-4 max-w-screen-sm min-h-screen">
+  <LayoutContainer>
     <header class="my-8">
       <h1 class="font-semibold text-2xl text-pink-500">{{ headingText }}</h1>
     </header>
@@ -130,12 +131,9 @@ const headingText = motivationalHeadings[randomIndex];
           />
         </TodoContainer>
       </DoneContainer>
-      <div class="mt-8">
-        <a href="#/history" class="text-pink-400">view history</a>
-      </div>
     </main>
-  </div>
-</template>
+  </LayoutContainer>
+  </template>
 
 <style scoped>
 </style>
