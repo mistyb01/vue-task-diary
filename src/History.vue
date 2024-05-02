@@ -9,7 +9,11 @@ import { ArrowLongLeftIcon } from "@heroicons/vue/24/outline";
 const tasks = useStorage("task-store", []);
 const completedTasks = computed(() => tasks.value.filter((t) => t.completionDate));
 
+const todayString = new Date().toISOString().substring(0,10);
 
+let yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+const yesterdayString = yesterday.toISOString().substring(0,10);
 
 function groupTasksByDate(taskArray) {
   let tasksByDateObj = {}
@@ -49,7 +53,9 @@ function undoComplete(todoId) {
       <div v-if="hasCompleted" class="flex flex-col gap-8">
         <div v-for="dateGroup in tasksByDateArray" :key="dateGroup.date">
           <h3 class="font-bold">
-            {{ dateGroup.date.replaceAll('/','.') }}
+            {{ dateGroup.date === todayString ? 'Today' : 
+            dateGroup.date === yesterdayString ? 'Yesterday' :
+            dateGroup.date.replaceAll('/','.') }}
           </h3>        
             <DoneItem 
               v-for="task in dateGroup.tasks" 
