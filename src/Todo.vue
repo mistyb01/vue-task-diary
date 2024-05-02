@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import LayoutContainer from "./components/LayoutContainer.vue";
 import TodoItem from "./components/TodoItem.vue";
 import DoneItem from "./components/DoneItem.vue";
