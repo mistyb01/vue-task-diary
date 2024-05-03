@@ -105,7 +105,7 @@ function addSubtask(todoId, subtaskTitle) {
 
 function deleteSubtask(todoId, subId) {
   const index = todos.value.findIndex((t) => t.id === todoId);
-  todos.value[index].subtasks = tasks.value[index].subtasks.filter((s) => s.id !== subId);  
+  todos.value[index].subtasks = todos.value[index].subtasks.filter((s) => s.id !== subId);  
 }
 
 const motivationalHeadings = [
