@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import LayoutContainer from "./components/LayoutContainer.vue";
 import TodoItem from "./components/TodoItem.vue";
 import DoneItem from "./components/DoneItem.vue";
@@ -123,6 +123,8 @@ function randomIntFromInterval(min, max) {
 const randomIndex = randomIntFromInterval(0, motivationalHeadings.length - 1);
 const headingText = motivationalHeadings[randomIndex];
 
+const completedToday = computed(() => completedTasks.value.filter(t=>new Date(t.completionDate).toDateString() === new Date().toDateString()))
+
 </script>
 
 <template>
@@ -148,11 +150,11 @@ const headingText = motivationalHeadings[randomIndex];
           msg="Let's do something! Add a task."
         />
       </TodoContainer>
-      <DoneContainer v-if="completedTasks.length">
+      <DoneContainer v-if="completedToday.length">
         <h2 class="text-xl">Completed today</h2>
         <TodoContainer>
           <DoneItem
-            v-for="task in completedTasks.filter(t=>new Date(t.completionDate).toDateString() === new Date().toDateString())"
+            v-for="task in completedToday"
             :key="task.id" 
             :task="task"
             @undoComplete="(todoId) => undoComplete(todoId)"
