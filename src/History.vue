@@ -60,7 +60,6 @@ function groupTasksByDate(taskArray) {
     }})
     
     let tasksByDateArrDateDescending = tasksByDateArr.sort((a,b) => a.date < b.date);
-    console.log(tasksByDateArrDateDescending)
     return tasksByDateArrDateDescending;
 }
 

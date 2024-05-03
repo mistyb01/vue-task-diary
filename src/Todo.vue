@@ -144,7 +144,6 @@ const completedToday = computed(() => completedTasks.value.filter(t=>new Date(t.
           @addSubtask="(todoId, title) => addSubtask(todoId, title)"
           @deleteSubtask="(todoId, subId) => deleteSubtask(todoId, subId)"
           />
-        <!-- @addSubtask="(todoId) => addSubtask(todoId)" -->
         <EmptyMessage 
           v-if="!todos.length"
           msg="Let's do something! Add a task."
