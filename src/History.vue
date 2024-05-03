@@ -8,11 +8,12 @@ import EmptyMessage from "./components/EmptyMessage.vue";
 const completedTasks = useStorage("completed-task-store", []);
 const todos = useStorage("pending-task-store", []);
 
-const todayString = new Date().toISOString().substring(0,10);
+// yyyy-mm-dd format
+const todayString = new Date().toLocaleDateString("sv"); 
 
 let yesterday = new Date();
 yesterday.setDate(yesterday.getDate() - 1);
-const yesterdayString = yesterday.toISOString().substring(0,10);
+const yesterdayString = yesterday.toLocaleDateString("sv");
 
 // function below was gpt-assisted
 // converts a yyyy-mm-dd string into a string with abbreviated month and day.
@@ -45,7 +46,7 @@ function groupTasksByDate(taskArray) {
   let tasksByDateObj = {}
   taskArray.forEach((task) => {
       // date field is converted to yyyy-mm-dd string
-      let dateStr = new Date(task.completionDate).toISOString().substring(0,10);
+      let dateStr = new Date(task.completionDate).toLocaleDateString("sv"); 
       if (tasksByDateObj[dateStr]) {
         tasksByDateObj[dateStr].push(task);
       } else {
@@ -60,7 +61,6 @@ function groupTasksByDate(taskArray) {
     }})
     
     let tasksByDateArrDateDescending = tasksByDateArr.sort((a,b) => a.date < b.date);
-    console.log(tasksByDateArrDateDescending)
     return tasksByDateArrDateDescending;
 }
 
